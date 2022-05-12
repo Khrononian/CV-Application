@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box
+}
+
+h1 {
+  font-size: 3rem;
+  text-align: center;
+}
+
+.resumes {
+  display: flex;
+  justify-content: space-around;
+}
+
+.main-profile {
+  background: rgb(225, 225, 225);
+  width: 650px;
+  height: 700px;
+  max-width: 75%;
+  margin: 3rem auto;
+}
+
+.main-profile-right {
+  display: flex;
+}
+
+.left-col, .right-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.left-col {
+  background: yellow;
+  height: 100%;
+  width: 240px;
+  padding: 2rem;
+}
+
+.right-col {
+  background: green;
+  width: 100%;
+}
