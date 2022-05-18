@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
 
-export class Header extends Component {
-    renderHeaderNames = () => {
-        // CONNECT TO INPUTS
-    }
 
+class Header extends Component {
     render() {
         return (
             <header>
-                <h2>{this.props.header}</h2>
+                <h2>{this.props.name}</h2>
                 <h3>{this.props.profession}</h3>
             </header>
         )

@@ -1,15 +1,24 @@
 import React, { Component } from 'react'
 
-export class HeaderCreate extends Component {
-    renderHeaderNames = (event) => {
-        this.props.setHeaders(event)
+class HeaderCreate extends Component {
+    renderHeaderName = (event) => {
+        this.props.setHeaderName(event)
+    }
+
+    renderPression = event => {
+        this.props.setProfession(event)
     }
 
     render() {
         return (
-            <div>
+            <div className='header'>
                 <h3>Personal Details</h3>
-                <input onChange={this.renderHeaderNames} type='text' />
+                <input name='name' value={this.props.gatherStates.header.name} onChange={this.renderHeaderName} type='text' 
+                placeholder='Name' />
+                <input name='profession' value={this.props.gatherStates.header.profession} onChange={this.renderHeaderName} type='text' 
+                placeholder='Name of profession' />
+                
+                {/* <input name='phoneNum' value={this.props.gatherStates.contacts.phoneNum} onChange={this.renderHeaderName} type='text' /> */}
             </div>
         )
     }
