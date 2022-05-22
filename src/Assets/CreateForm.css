@@ -1,0 +1,35 @@
+.create-inputs h3 {
+    font-size: 1.3rem;
+}
+
+.create-inputs {
+    display: flex;
+    flex-direction: column;
+    background: red;
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.create-inputs input, button {
+    width: 80%;
+    padding: .4em;
+    margin: .4rem auto;
+    border-color: transparent;
+    border-radius: 4px;
+}
+
+.skill-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.skill-form input {
+    margin: .5rem auto .4rem auto;
+}
+
+.skill-form button {
+    width: 80%;
+    margin: 0 auto;
+    cursor: pointer;
+}
