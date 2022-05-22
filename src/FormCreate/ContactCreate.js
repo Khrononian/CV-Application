@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+// import '../Assets/ContactCreate.css'
+import '../Assets/CreateForm.css'
 
 class ContactCreate extends Component {
     renderContacts = event => {
@@ -11,9 +13,8 @@ class ContactCreate extends Component {
 
     render() {
         return (
-            <div>
-                <h3>Contacts</h3>
-                <input name='imageUrl' id='image' value={this.props.gatherStates.contacts.imageUrl} onChange={this.renderImageUrl} type='file' />
+            <div className='create-inputs'>
+                <input name='imageUrl' id='image' onChange={this.renderImageUrl} type='file' />
                 <label htmlFor='image'></label>
 
                 <input name='phoneNum' value={this.props.gatherStates.contacts.phoneNum} onChange={this.renderContacts} type='tel' 
@@ -25,6 +26,8 @@ class ContactCreate extends Component {
                 <input name='links' value={this.props.gatherStates.contacts.links} onChange={this.renderContacts} type='url'
                 placeholder='Links' />
 
+                <textarea name='profile' value={this.props.gatherStates.profile} onChange={this.renderContacts} 
+                placeholder='Profile' style={{resize: 'none', height: '90px', width: '260px'}}></textarea>
             </div>
         )
     }

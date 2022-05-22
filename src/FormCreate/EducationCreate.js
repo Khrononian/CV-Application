@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import '../Assets/CreateForm.css'
 
 class EducationCreate extends Component {
     renderEudcation = event => {
@@ -14,7 +14,7 @@ class EducationCreate extends Component {
 
     render() {
         return (
-        <div>
+        <div className='create-inputs'>
             <h3>Education</h3>
 
             <input name='degree' value={this.props.gatherStates.education.degree} onChange={this.renderEudcation} type='text'
@@ -27,9 +27,10 @@ class EducationCreate extends Component {
             placeholder='To' />
 
             <h3>Skills</h3>
-            <form>
+            <form className='skill-form'>
                 <input onChange={this.props.setInputs} type='text' placeholder='Skills' />
                 <button onClick={this.renderSkills} type='submit'>Add Skills</button>
+
                 {/* SEE WHICH PLACEMENT IS MORE CONVIENIENT */}
             </form>
             
