@@ -3,10 +3,14 @@ import './App.css';
 import HeaderCreate from './FormCreate/HeaderCreate' 
 import ContactCreate from './FormCreate/ContactCreate'
 import EducationCreate from './FormCreate/EducationCreate'
+// import ProfileCreate from './FormCreate/ProfileCreate'
+import ExperienceCreate from './FormCreate/ExperienceCreate'
 
 import Header from './FormPreview/Header'
 import Contacts from './FormPreview/Contacts'
 import Education from './FormPreview/Education'
+import Profile from './FormPreview/Profile' // CHECK THIS
+import Experience from './FormPreview/Experience'
 
 class App extends Component {
   constructor () {
@@ -36,9 +40,7 @@ class App extends Component {
         skill: '',
       },
       skillsArray: [],
-      profile: {
-        desc: ''
-      },
+      profile: '',
       experience: {
         jobName: '',
         company: '',
@@ -47,8 +49,9 @@ class App extends Component {
           from: '',
           to: ''
         },
-        summaryPoints: []
-      } 
+      },
+      responsibility: '',
+      jobResponsibilities: []
     }
   }
 
@@ -75,7 +78,8 @@ class App extends Component {
         [event.target.name]: event.target.value,
         [event.target.name]: event.target.value,
         [event.target.name]: event.target.value,
-      }
+      },
+      profile: event.target.value
     })
   }
 
@@ -84,7 +88,6 @@ class App extends Component {
       this.setState({
         contacts: {
           imageUrl: URL.createObjectURL(event.target.files[0])
-          // imageUrl: event.target.files[0]
         }
       }, () => console.log(this.state.contacts))
     }
@@ -100,8 +103,12 @@ class App extends Component {
           ...this.state.education.duration,
           [event.target.name]: event.target.value,
           [event.target.name]: event.target.value,
+          [event.target.name]: event.target.value,
+          [event.target.name]: event.target.value,
+          [event.target.name]: event.target.value,
+          [event.target.name]: event.target.value,
         }
-      }
+      },
     })
   }
 
@@ -125,6 +132,33 @@ class App extends Component {
     Array.from(document.querySelectorAll('input')).forEach(
       input => input.value = ''
     )
+  }
+
+  setExerperience = event => {
+    this.setState({
+      experience: {
+        ...this.state.experience,
+        [event.target.name]: event.target.value,
+        [event.target.name]: event.target.value,
+        [event.target.name]: event.target.value,
+        duration: {
+          [event.target.name]: event.target.value,
+          [event.target.name]: event.target.value,
+        }
+      },
+    })
+  }
+
+  setResponsibility = event => {
+    this.setState({
+      responsibility: event.target.value
+    })
+  }
+
+  setResponsibilities = event => {
+    this.setState({
+      jobResponsibilities: this.state.jobResponsibilities.concat(this.state.responsibility)
+    })
   }
 
   render () {
@@ -153,6 +187,13 @@ class App extends Component {
                 setSkills={this.setSkills}
                 setInputs={this.setInputs}
               />
+
+              <ExperienceCreate
+                gatherStates={this.state}
+                setExperience={this.setExerperience}
+                setResponsibility={this.setResponsibility}
+                setResponsibilities={this.setResponsibilities}
+              />
             </div>
 
           </div>
@@ -178,6 +219,15 @@ class App extends Component {
               <Header 
                 name={this.state.header.name} 
                 profession={this.state.header.profession}
+              />
+
+              <Profile
+                profile={this.state.profile}
+              />
+
+              <Experience
+                jobName={this.state.experience.jobName}
+                responsibilities={this.state.jobResponsibilities}
               />
             </div>
           </div>
