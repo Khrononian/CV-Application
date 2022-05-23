@@ -6,18 +6,26 @@
     display: flex;
     flex-direction: column;
     background: red;
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     text-align: center;
 }
 
-.create-inputs input, button {
-    width: 80%;
+.create-inputs input, textarea, button {
+    width: 90%;
     padding: .4em;
     margin: .4rem auto;
     border-color: transparent;
     border-radius: 4px;
 }
+
+/* textarea {
+    width: 300px;
+    padding: .4em;
+    margin: .4rem auto;
+    border-color: transparent;
+    border-radius: 4px;
+} */
 
 .skill-form {
     display: flex;
@@ -29,7 +37,7 @@
 }
 
 .skill-form button {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     cursor: pointer;
 }
