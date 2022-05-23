@@ -27,7 +27,7 @@ class ContactCreate extends Component {
                 placeholder='Links' />
 
                 <textarea name='profile' value={this.props.gatherStates.profile} onChange={this.renderContacts} 
-                placeholder='Profile' style={{resize: 'none', height: '90px', width: '260px'}}></textarea>
+                placeholder='Profile' style={{resize: 'none', height: '110px'}}></textarea>
             </div>
         )
     }
