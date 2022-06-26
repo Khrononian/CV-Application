@@ -5,7 +5,11 @@
 .create-inputs {
     display: flex;
     flex-direction: column;
+<<<<<<< HEAD
     /* background: white; */
+=======
+    background: red;
+>>>>>>> 65daebb94c44f7ca1296421f8e96ac569913d31c
     width: 90%;
     margin: 0 auto;
     text-align: center;
@@ -36,7 +40,11 @@
     margin: .5rem auto .4rem auto;
 }
 
+<<<<<<< HEAD
 .skill-form button, form button {
+=======
+.skill-form button {
+>>>>>>> 65daebb94c44f7ca1296421f8e96ac569913d31c
     width: 90%;
     margin: 0 auto;
     cursor: pointer;
