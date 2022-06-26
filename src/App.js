@@ -101,7 +101,6 @@ class App extends Component {
           // [event.target.name]: event.target.value,
           // [event.target.name]: event.target.value,
           // [event.target.name]: event.target.value,
-          // [event.target.name]: event.target.value,
         }
       },
     })
