@@ -1,21 +1,14 @@
 * {
   margin: 0;
   padding: 0;
-<<<<<<< HEAD
   box-sizing: border-box;
   background-color: rgb(236, 236, 236)
-=======
-  box-sizing: border-box
->>>>>>> 65daebb94c44f7ca1296421f8e96ac569913d31c
 }
 
 h1 {
   font-size: 3rem;
   text-align: center;
-<<<<<<< HEAD
   margin-bottom: 2rem;
-=======
->>>>>>> 65daebb94c44f7ca1296421f8e96ac569913d31c
 }
 
 .resumes {
@@ -24,18 +17,13 @@ h1 {
 }
 
 .main-profile {
-<<<<<<< HEAD
   /* background: rgb(225, 225, 225); */
-=======
-  background: rgb(225, 225, 225);
->>>>>>> 65daebb94c44f7ca1296421f8e96ac569913d31c
   width: 650px;
   height: 700px;
   max-width: 75%;
   margin: 3rem auto;
 }
 
-<<<<<<< HEAD
 
 
 .create-inputs {
@@ -55,8 +43,6 @@ h1 {
   background: rgb(165, 165, 165);
 }
 
-=======
->>>>>>> 65daebb94c44f7ca1296421f8e96ac569913d31c
 .main-profile-right {
   display: flex;
 }
@@ -67,7 +53,6 @@ h1 {
 }
 
 .left-col {
-<<<<<<< HEAD
   background: beige;
   height: 100%;
   width: 250px;
@@ -211,15 +196,4 @@ img {
   .right-col > * {
     font-size: 1.11rem;
   }
-=======
-  background: yellow;
-  height: 100%;
-  width: 250px;
-  padding: 2rem;
-}
-
-.right-col {
-  background: green;
-  width: 100%;
->>>>>>> 65daebb94c44f7ca1296421f8e96ac569913d31c
 }
