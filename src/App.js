@@ -12,6 +12,28 @@ import Education from './FormPreview/Education'
 import Profile from './FormPreview/Profile' // CHECK THIS
 import Experience from './FormPreview/Experience'
 
+// const ExperienceTemplate = (props) => {
+//   return (
+//     <div className='experience heading'>
+//         <h5>{props.jobName}</h5>
+//         <div className='experience-header'>
+//             <h5>{props.company}</h5>
+//             |
+//             <h5>{props.location}</h5>
+//             |
+//             <h5>{props.from} - {props.to}</h5>
+//         </div>
+//         <p>Summarize your main responsibilities using past tense and provide information
+//         about the organization
+//         </p>
+//         <ul className='responsibility-list'>
+//             {props.responsibilities.map((task, index) => {
+//                 return <li key={index}>{task}</li>
+//             })}
+//         </ul>
+//     </div>
+//   )
+// }
 class App extends Component {
   constructor () {
     super()
@@ -44,6 +66,7 @@ class App extends Component {
       },
       skillsArray: ['Patience', 'Optimism', 'Resilience', 'Detailed'],
       profile: 'Write a powerful performance summary here. Highlight your most valuabel skills, qualifications, achievments, credentials and other distinguishing information as it relates to and supports your current objective.',
+      
       experience: {
         jobName: 'Customer Service Frontend',
         company: 'Whole Foods Market',
@@ -53,9 +76,56 @@ class App extends Component {
           to: '2022'
         },
       },
+      experienceValues: [
+        {
+          jobName: '',
+          company: '',
+          location: '',
+          
+            from: '',
+            to: ''
+          ,
+          responsibility: '',
+          jobResponsibilities: [],
+          id: 0
+        }
+      ],
       responsibility: '',
-      jobResponsibilities: ['Customer service as cashier', 'Answering a guests question', 'Cash handling experience']
+      jobResponsibilities: ['Customer service as cashier', 'Answering a guests question', 'Cash handling experience'],
+      data: 0
     }
+  }
+
+  addExperience = () => {
+    this.setState(prevState => ({
+      experienceValues: [{
+        ...this.state.experienceValues[0],
+        id: prevState.id = prevState.data + 1
+      }],
+      data: prevState.data + 1
+    }), console.log(this.state))
+  }
+
+  handleInputChanges = (event) => {
+    // let values = [...this.state.experienceValues]
+
+    // values[index] = event.target.value
+    console.log(event, this.state.data)
+    // this.setState({ values })
+
+    this.setState({
+        experienceValues: [{
+          ...this.state.experienceValues[0],
+          [event.target.name]: event.target.value
+      }]
+    })
+  }
+
+  removeFormUI = event => {
+    const values = [...this.state.experienceValues];
+
+    values.splice(event, 1);
+    this.setState({ values })
   }
 
   setHeaderName = (event) => {
@@ -160,7 +230,38 @@ class App extends Component {
     this.responsibilityRef.current.value = ''
   }
 
+  createOutputUI = () => {
+    const getInfo = this.state.experienceValues
+    return (
+      <div className='experience heading' id={this.state.data}>
+          {/* <h3>Professional Experience</h3> */}
+          <h5>{getInfo[this.state.data].jobName}</h5>
+          <div className='experience-header'>
+              <h5>{getInfo[this.state.data].company}</h5>
+              |
+              <h5>{getInfo[this.state.data].location}</h5>
+              |
+              <h5>{getInfo[this.state.data].from} - {getInfo[this.state.data].to}</h5>
+          </div>
+          <p>Summarize your main responsibilities using past tense and provide information
+          about the organization
+          </p>
+          <ul className='responsibility-list'>
+              {this.state.experienceValues[this.state.data].jobResponsibilities.map((task, index) => {
+                  return <li key={index}>{task}</li>
+              })}
+          </ul>
+      </div>
+    )
+  }
+
   render () {
+    // const children = []
+
+    // for (let i = 0; i < this.state.data; i += 1) {
+    //   children.push(<ExperienceTemplate key={i} />)
+    // }
+
     return (
       <div>
         <h1>CV Project</h1>
@@ -194,6 +295,10 @@ class App extends Component {
                 setResponsibility={this.setResponsibility}
                 setResponsibilities={this.setResponsibilities}
                 responsibilityRef={this.responsibilityRef}
+                experienceValues={this.state.experienceValues}
+                addExperience={this.addExperience}
+                removeFormUI={this.removeFormUI}
+                handleInputChanges={this.handleInputChanges}
               />
             </div>
 
@@ -233,7 +338,20 @@ class App extends Component {
                 from={this.state.experience.duration.from}
                 to={this.state.experience.duration.to}
                 responsibilities={this.state.jobResponsibilities}
+                id={this.state.data}
               />
+
+              {/* <ExperienceTemplate 
+                jobName={this.state.experienceValues[this.state.data].jobName}
+                company={this.state.experienceValues.company}
+                location={this.state.experienceValues.location}
+                from={this.state.experienceValues.from}
+                to={this.state.experienceValues.to}
+                responsibilities={this.state.jobResponsibilities}
+                id={this.state.data}
+              /> */}
+
+              {this.createOutputUI()}
             </div>
           </div>
         </div>
