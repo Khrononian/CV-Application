@@ -154,6 +154,20 @@ img {
   margin-left: .5rem;
 }
 
+button {
+  color: white;
+  cursor: pointer;
+}
+
+.btn {
+  background: green;
+}
+
+.new-form {
+  margin-top: 1rem;
+  background: transparent;
+}
+
 @media screen and (min-width: 320px) {
   .resumes {
     display: flex;
