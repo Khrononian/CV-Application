@@ -4,7 +4,7 @@ class Experience extends Component {
 
     render() {
         return (
-            <div className='experience heading' id={this.props.id}>
+            <div className='experience heading' >
                 <h3>Professional Experience</h3>
                 <h5>{this.props.jobName}</h5>
                 <div className='experience-header'>
