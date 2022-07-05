@@ -81,7 +81,6 @@ class App extends Component {
           jobName: '',
           company: '',
           location: '',
-          
             from: '',
             to: ''
           ,
@@ -98,35 +97,54 @@ class App extends Component {
 
   addExperience = () => {
     this.setState(prevState => ({
-      experienceValues: [{
-        ...this.state.experienceValues[0],
-        id: prevState.id = prevState.data + 1
-      }],
+      // experienceValues: [{
+      //   ...this.state.experienceValues[0],
+      //   id: prevState.id = prevState.data + 1
+      // }],
+      experienceValues: 
+        this.state.experienceValues.concat({
+          jobName: '',
+          company: '',
+          location: '',
+          from: '',
+          to: '',
+          responsibility: '',
+          jobResponsibilities: [],
+          id: prevState.id = prevState.data + 1
+        }),
+      
       data: prevState.data + 1
-    }), console.log(this.state))
+    }), console.log('Check', this.state.experienceValues, this.state.data))
   }
 
   handleInputChanges = (event) => {
     // let values = [...this.state.experienceValues]
 
     // values[index] = event.target.value
-    console.log(event, this.state.data)
+    console.log('F', event, this.state.data, this.state.experienceValues[this.state.data], this.state.experienceValues)
     // this.setState({ values })
-
-    this.setState({
-        experienceValues: [{
-          ...this.state.experienceValues[0],
+    
+    this.setState(prevState => ({
+      //   experienceValues: [{
+      //     // ...prevState.experienceValues[this.state.data],
+      //     // [event.target.name]: event.target.value
+          
+      // }]
+      experienceValues: prevState.experienceValues.map(
+        item => item.id === this.state.data? {
+          ...item,
           [event.target.name]: event.target.value
-      }]
-    })
+        } : item
+      )
+    }))
   }
 
-  removeFormUI = event => {
-    const values = [...this.state.experienceValues];
+  // removeFormUI = event => {
+  //   const values = [...this.state.experienceValues];
 
-    values.splice(event, 1);
-    this.setState({ values })
-  }
+  //   values.splice(event, 1);
+  //   this.setState({ values })
+  // }
 
   setHeaderName = (event) => {
     this.setState({
@@ -232,26 +250,30 @@ class App extends Component {
 
   createOutputUI = () => {
     const getInfo = this.state.experienceValues
-    return (
-      <div className='experience heading' id={this.state.data}>
-          {/* <h3>Professional Experience</h3> */}
-          <h5>{getInfo[this.state.data].jobName}</h5>
-          <div className='experience-header'>
-              <h5>{getInfo[this.state.data].company}</h5>
-              |
-              <h5>{getInfo[this.state.data].location}</h5>
-              |
-              <h5>{getInfo[this.state.data].from} - {getInfo[this.state.data].to}</h5>
-          </div>
-          <p>Summarize your main responsibilities using past tense and provide information
-          about the organization
-          </p>
-          <ul className='responsibility-list'>
-              {this.state.experienceValues[this.state.data].jobResponsibilities.map((task, index) => {
-                  return <li key={index}>{task}</li>
-              })}
-          </ul>
-      </div>
+    return this.state.experienceValues.map((current, index) => 
+
+        <div className='experience heading' key={index} id={index}>
+          {console.log('BEFORE', getInfo[index])}
+            {/* <h5>{getInfo[index].id === this.state.data ? getInfo[index].jobName : getInfo[index].jobName}</h5>  */}
+            <h5>{getInfo[index].jobName}</h5>
+            <div className='experience-header'>
+                <h5>{getInfo[index].company}</h5>
+                |
+                <h5>{getInfo[index].location}</h5>
+                |
+                <h5>{getInfo[index].from} - {getInfo[index].to}</h5>
+            </div>
+            <p>Summarize your main responsibilities using past tense and provide information
+            about the organization
+            </p>
+            <ul className='responsibility-list'>
+                {getInfo[index].jobResponsibilities.map((task, index) => {
+                    return <li key={index}>{task}</li>
+                })}
+            </ul>
+          {console.log('FIND', getInfo[this.state.data], getInfo[index].id === this.state.data ? getInfo[index].jobName : getInfo[index].jobName, getInfo[index].id === 0, getInfo[index].id)}
+        </div>
+        
     )
   }
 
@@ -338,7 +360,7 @@ class App extends Component {
                 from={this.state.experience.duration.from}
                 to={this.state.experience.duration.to}
                 responsibilities={this.state.jobResponsibilities}
-                id={this.state.data}
+                // id={this.state.data}
               />
 
               {/* <ExperienceTemplate 
