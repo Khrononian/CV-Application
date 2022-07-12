@@ -5,7 +5,6 @@
 .create-inputs {
     display: flex;
     flex-direction: column;
-    /* background: white; */
     width: 90%;
     margin: 0 auto;
     text-align: center;
@@ -18,14 +17,6 @@
     border-color: transparent;
     border-radius: 4px;
 }
-
-/* textarea {
-    width: 300px;
-    padding: .4em;
-    margin: .4rem auto;
-    border-color: transparent;
-    border-radius: 4px;
-} */
 
 .skill-form {
     display: flex;
