@@ -12,34 +12,13 @@ import Education from './FormPreview/Education'
 import Profile from './FormPreview/Profile' // CHECK THIS
 import Experience from './FormPreview/Experience'
 
-// const ExperienceTemplate = (props) => {
-//   return (
-//     <div className='experience heading'>
-//         <h5>{props.jobName}</h5>
-//         <div className='experience-header'>
-//             <h5>{props.company}</h5>
-//             |
-//             <h5>{props.location}</h5>
-//             |
-//             <h5>{props.from} - {props.to}</h5>
-//         </div>
-//         <p>Summarize your main responsibilities using past tense and provide information
-//         about the organization
-//         </p>
-//         <ul className='responsibility-list'>
-//             {props.responsibilities.map((task, index) => {
-//                 return <li key={index}>{task}</li>
-//             })}
-//         </ul>
-//     </div>
-//   )
-// }
 class App extends Component {
   constructor () {
     super()
 
     this.skillRef = React.createRef();
     this.responsibilityRef = React.createRef()
+    this.newResponsibilityRef = React.createRef()
 
     this.state = {
       header: {
@@ -76,31 +55,26 @@ class App extends Component {
           to: '2022'
         },
       },
+      responsibility: '',
+      jobResponsibilities: ['Customer service as cashier', 'Answering a guests question', 'Cash handling experience'],
       experienceValues: [
         {
           jobName: '',
           company: '',
           location: '',
-            from: '',
-            to: ''
-          ,
+          from: '',
+          to: '',
           responsibility: '',
           jobResponsibilities: [],
           id: 0
         }
       ],
-      responsibility: '',
-      jobResponsibilities: ['Customer service as cashier', 'Answering a guests question', 'Cash handling experience'],
       data: 0
     }
   }
 
   addExperience = () => {
     this.setState(prevState => ({
-      // experienceValues: [{
-      //   ...this.state.experienceValues[0],
-      //   id: prevState.id = prevState.data + 1
-      // }],
       experienceValues: 
         this.state.experienceValues.concat({
           jobName: '',
@@ -112,39 +86,42 @@ class App extends Component {
           jobResponsibilities: [],
           id: prevState.id = prevState.data + 1
         }),
-      
       data: prevState.data + 1
     }), console.log('Check', this.state.experienceValues, this.state.data))
   }
 
   handleInputChanges = (event) => {
-    // let values = [...this.state.experienceValues]
-
-    // values[index] = event.target.value
     console.log('F', event, this.state.data, this.state.experienceValues[this.state.data], this.state.experienceValues)
-    // this.setState({ values })
     
     this.setState(prevState => ({
-      //   experienceValues: [{
-      //     // ...prevState.experienceValues[this.state.data],
-      //     // [event.target.name]: event.target.value
-          
-      // }]
       experienceValues: prevState.experienceValues.map(
-        item => item.id === this.state.data? {
+        (item, index) => item.id === Number( event.nativeEvent.path[1].id) ? {
           ...item,
           [event.target.name]: event.target.value
-        } : item
+        } : item,
+        
       )
     }))
   }
 
-  // removeFormUI = event => {
-  //   const values = [...this.state.experienceValues];
+  removeFormUI = event => {
+    console.log('Click delete', event)
+    
+    const mappedItems = this.state.experienceValues
+    .filter(current => current.id !== Number(event.nativeEvent.path[1].id))
+    .map((item, index) => item.id !== index ? {
+      ...item,
+      id: index,
+    } : item
+    )
 
-  //   values.splice(event, 1);
-  //   this.setState({ values })
-  // }
+    this.setState(prevState => ({
+      experienceValues: mappedItems,
+      data: prevState.data - 1
+    }))
+
+    console.log('Delete', this.state.experienceValues, event)
+  }
 
   setHeaderName = (event) => {
     this.setState({
@@ -169,8 +146,7 @@ class App extends Component {
   setImageUrl = event => {
     if (event.target.files && event.target.files[0]) {
       this.setState({
-        
-          imageUrl: URL.createObjectURL(event.target.files[0])
+        imageUrl: URL.createObjectURL(event.target.files[0])
         
       }, () => console.log(this.state.contacts))
     }
@@ -181,14 +157,9 @@ class App extends Component {
       education: {
         ...this.state.education,
         [event.target.name]: event.target.value,
-        // [event.target.name]: event.target.value,
         duration: {
           ...this.state.education.duration,
           [event.target.name]: event.target.value,
-          // [event.target.name]: event.target.value,
-          // [event.target.name]: event.target.value,
-          // [event.target.name]: event.target.value,
-          // [event.target.name]: event.target.value,
         }
       },
     })
@@ -220,12 +191,9 @@ class App extends Component {
       experience: {
         ...this.state.experience,
         [event.target.name]: event.target.value,
-        // [event.target.name]: event.target.value,
-        // [event.target.name]: event.target.value,
         duration: {
           ...this.state.experience.duration,
           [event.target.name]: event.target.value,
-          // [event.target.name]: event.target.value,
         }
       },
     })
@@ -237,15 +205,44 @@ class App extends Component {
     })
   }
 
+  setNewResponsibility = event => {
+    console.log('INNIE CHANGE', event, Number(event.nativeEvent.path[1].id))
+    this.setState( prevState => ({
+      experienceValues: prevState.experienceValues
+      .map((item, index) => item.id === Number(event.nativeEvent.path[2].id) ? Object.assign({}, item, { responsibility: event.target.value }) : item)
+    }))
+  }
+
   setResponsibilities = event => {
     event.preventDefault()
 
     if (this.responsibilityRef.current.value === '') return
+
+    console.log('RES', event)
     this.setState({
       responsibility: '',
       jobResponsibilities: this.state.jobResponsibilities.concat(this.state.responsibility)
     })
+
     this.responsibilityRef.current.value = ''
+  }
+
+  setNewResponsibilities = event => {
+    event.preventDefault()
+
+    console.log('INNIE', event)
+    if (this.newResponsibilityRef.current.value === '') return
+
+    this.setState({
+      experienceValues: this.state.experienceValues
+      .map(current => current.id === Number(event.nativeEvent.path[2].id) ?
+      Object.assign({}, current, { 
+        responsibility: '',
+        jobResponsibilities: current.jobResponsibilities.concat(current.responsibility) 
+      }) : current)
+    })
+
+    this.newResponsibilityRef.current.value = ''
   }
 
   createOutputUI = () => {
@@ -253,8 +250,7 @@ class App extends Component {
     return this.state.experienceValues.map((current, index) => 
 
         <div className='experience heading' key={index} id={index}>
-          {console.log('BEFORE', getInfo[index])}
-            {/* <h5>{getInfo[index].id === this.state.data ? getInfo[index].jobName : getInfo[index].jobName}</h5>  */}
+          {console.log('BEFORE', getInfo)}
             <h5>{getInfo[index].jobName}</h5>
             <div className='experience-header'>
                 <h5>{getInfo[index].company}</h5>
@@ -271,19 +267,12 @@ class App extends Component {
                     return <li key={index}>{task}</li>
                 })}
             </ul>
-          {console.log('FIND', getInfo[this.state.data], getInfo[index].id === this.state.data ? getInfo[index].jobName : getInfo[index].jobName, getInfo[index].id === 0, getInfo[index].id)}
         </div>
         
     )
   }
 
   render () {
-    // const children = []
-
-    // for (let i = 0; i < this.state.data; i += 1) {
-    //   children.push(<ExperienceTemplate key={i} />)
-    // }
-
     return (
       <div>
         <h1>CV Project</h1>
@@ -316,7 +305,10 @@ class App extends Component {
                 setExperience={this.setExperience}
                 setResponsibility={this.setResponsibility}
                 setResponsibilities={this.setResponsibilities}
+                setNewResponsibility={this.setNewResponsibility}
+                setNewResponsibilities={this.setNewResponsibilities}
                 responsibilityRef={this.responsibilityRef}
+                newResponsibilityRef={this.newResponsibilityRef}
                 experienceValues={this.state.experienceValues}
                 addExperience={this.addExperience}
                 removeFormUI={this.removeFormUI}
@@ -360,18 +352,7 @@ class App extends Component {
                 from={this.state.experience.duration.from}
                 to={this.state.experience.duration.to}
                 responsibilities={this.state.jobResponsibilities}
-                // id={this.state.data}
               />
-
-              {/* <ExperienceTemplate 
-                jobName={this.state.experienceValues[this.state.data].jobName}
-                company={this.state.experienceValues.company}
-                location={this.state.experienceValues.location}
-                from={this.state.experienceValues.from}
-                to={this.state.experienceValues.to}
-                responsibilities={this.state.jobResponsibilities}
-                id={this.state.data}
-              /> */}
 
               {this.createOutputUI()}
             </div>
