@@ -70,6 +70,14 @@ h1 {
   background-color: transparent;
 }
 
+.contacts {
+  text-align: center;
+}
+
+.contacts h3, .contacts p {
+  text-align: left;
+}
+
 .contacts h3, .education h3 {
   background: rgb(66, 66, 66);
   padding: .2em;
@@ -159,6 +167,10 @@ button {
   cursor: pointer;
 }
 
+.delete-btn {
+  background: red;
+}
+
 .btn {
   background: green;
 }
@@ -169,6 +181,14 @@ button {
 }
 
 @media screen and (min-width: 320px) {
+  .right-col header h2 {
+    font-size: 1.2rem;
+  }
+
+  .right-col header h3 {
+    font-size: 1rem;
+  }
+
   .resumes {
     display: flex;
     align-items: center;
@@ -190,7 +210,11 @@ button {
     width: 100%;
   }
 
-  .left-col, .right-col {
+  .left-col {
+    padding: 0;
+  }
+
+   .right-col  {
     padding: 0 .5em;
   }
 
@@ -198,10 +222,18 @@ button {
     padding: 0;
   }
 
-  
+
 }
 
 @media screen and (min-width: 768px) {
+  .right-col header h2 {
+    font-size: 1.8rem;
+  }
+
+  .right-col header h3 {
+    font-size: 1.4rem;
+  }
+
   .left-col, .right-col {
     padding: 1em 1em;
   }
