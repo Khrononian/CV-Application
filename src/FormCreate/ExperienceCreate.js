@@ -12,41 +12,47 @@ class ExperienceCreate extends Component {
         this.props.setResponsibilities(event)
     }
 
+    renderNewResponsibilities = event => {
+        event.preventDefault()
+
+        this.props.setNewResponsibilities(event)
+    }
+
     handleChanges = (event) => {
         this.props.handleInputChanges(event)
     }
 
-    createFormUI = () => {
-        return this.props.experienceValues.map((current, index) => 
-            <div key={index} id={index} className='new-form '>
-                <input name='jobName' value={this.props.gatherStates.experienceValues.jobName} onChange={this.handleChanges} type='text'
-                placeholder='Position' />
-                <input name='company' value={this.props.gatherStates.experienceValues.company} onChange={this.handleChanges} type='text'
-                placeholder='Company' />
-                <input name='location' value={this.props.gatherStates.experienceValues.location} onChange={this.handleChanges} type='text'
-                placeholder='Location' />
-                <input name='from' value={this.props.gatherStates.experienceValues.from} onChange={this.handleChanges} type='number' min='1900' max='2099'
-                placeholder='From' />
-                <input name='to' value={this.props.gatherStates.experienceValues.to} onChange={this.handleChanges} type='number' min='1900' max='2099'
-                placeholder='To' />
-
-                <form className='responsibility-form'>
-                    <input ref={this.props.responsibilityRef} onChange={this.props.setResponsibility} type='text'
-                    placeholder='Responsibilities' />
-                    <button type='submit' onClick={this.renderResponsibilities}>Add Responsibility</button>
-                </form>
-
-                {/* <input type='button' onClick={this.removeForm}>Delete</input> */}
-            </div>
-        )
+    removeForm = event => {
+        this.props.removeFormUI(event)
     }
 
     addClick = () => {
         this.props.addExperience()
     }
 
-    removeForm = event => {
-        this.props.removeFormUI(event)
+    createFormUI = () => {
+        return this.props.experienceValues.map((current, index) => 
+            <div key={index} id={index} className='new-form '>
+                <input name='jobName' value={current.jobName} onChange={this.handleChanges} type='text'
+                placeholder='Position' />
+                <input name='company' value={current.company} onChange={this.handleChanges} type='text'
+                placeholder='Company' />
+                <input name='location' value={current.location} onChange={this.handleChanges} type='text'
+                placeholder='Location' />
+                <input name='from' value={current.from} onChange={this.handleChanges} type='number' min='1900' max='2099'
+                placeholder='From' />
+                <input name='to' value={current.to} onChange={this.handleChanges} type='number' min='1900' max='2099'
+                placeholder='To' />
+
+                <form className='responsibility-form'>
+                    <input ref={this.props.newResponsibilityRef} value={current.responsibility} onChange={this.props.setNewResponsibility} type='text'
+                    placeholder='Responsibilities' />
+                    <button type='submit' onClick={this.renderNewResponsibilities}>Add Responsibility</button>
+                </form>
+
+                <button type='button' className='delete-btn' onClick={this.removeForm}>Delete</button>
+            </div>
+        )
     }
 
     render() {

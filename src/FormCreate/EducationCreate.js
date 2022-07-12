@@ -19,7 +19,7 @@ class EducationCreate extends Component {
 
             <input name='degree' value={this.props.gatherStates.education.degree} onChange={this.renderEducation} type='text'
             placeholder='Your degree / Major' />
-            <input name='schoolName' value={this.props.gatherStates.education.schoolname} onChange={this.renderEducation} type='text'
+            <input name='schoolName' value={this.props.gatherStates.education.schoolName} onChange={this.renderEducation} type='text'
             placeholder='School Name' />
             <input name='from' value={this.props.gatherStates.education.duration.from} onChange={this.renderEducation} type='month'
             placeholder='From' />
