@@ -17,7 +17,6 @@ h1 {
 }
 
 .main-profile {
-  /* background: rgb(225, 225, 225); */
   width: 650px;
   height: 700px;
   max-width: 75%;
@@ -88,7 +87,6 @@ h1 {
 .right-col {
   background: white;
   width: 77.5%;
-  /* padding: 1.5rem; */
   padding: 0 1.5em 1.5em 1.5em;
 }
 
@@ -102,7 +100,6 @@ h1 {
 
 .right-col header h2 {
   font-size: 2.2rem;
-  /* word-spacing: 5px; */
   letter-spacing: .5em;
   margin-bottom: .5rem;
 }
@@ -113,10 +110,8 @@ h1 {
 
 img {
   width: 150px;
-  /* height: 170px; */
   object-fit: contain;
   margin-bottom: 2rem;
-  /* border-radius: 50%; */
 }
 
 .heading, .profile h3, .experience h3 {
@@ -133,7 +128,6 @@ img {
 
 .profile {
   width: 100%;
-  /* margin-bottom: 1.5rem; */
 }
 
 .profile p {
@@ -241,5 +235,12 @@ button {
   .create-inputs > *, .left-col > *,
   .right-col > * {
     font-size: 1.11rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .resumes {
+    flex-direction: row;
+    align-items: flex-start;
   }
 }
