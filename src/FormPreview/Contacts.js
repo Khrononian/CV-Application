@@ -1,18 +1,16 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class Contacts extends Component {
-  render() {
+const Contacts = (props) => {
     return (
       <div className='contacts heading'>
-          <img src={this.props.imageUrl} alt='Avatar' />
-          <h3>Contacts</h3>
-          <p className='phone'>{this.props.phoneNum}</p>
-          <p className='email'>{this.props.email}</p>
-          <p className='location'>{this.props.location}</p>
-          <p className='links'>{this.props.links}</p>
+        <img src={props.imageUrl} alt='Avatar' />
+        <h3>Contacts</h3>
+        <p className='phone'>{props.phoneNum}</p>
+        <p className='email'>{props.email}</p>
+        <p className='location'>{props.location}</p>
+        <p className='links'>{props.links}</p>
       </div>
     )
-  }
 }
 
 export default Contacts

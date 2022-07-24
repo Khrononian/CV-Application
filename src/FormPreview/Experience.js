@@ -1,29 +1,27 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class Experience extends Component {
-    render() {
-        return (
-            <div className='experience heading' >
-                <h3>Professional Experience</h3>
-                <h5>{this.props.jobName}</h5>
-                <div className='experience-header'>
-                    <h5>{this.props.company}</h5>
-                    |
-                    <h5>{this.props.location}</h5>
-                    |
-                    <h5>{this.props.from} - {this.props.to}</h5>
-                </div>
-                <p>Summarize your main responsibilities using past tense and provide information
-                about the organization
-                </p>
-                <ul className='responsibility-list'>
-                    {this.props.responsibilities.map((task, index) => {
-                        return <li key={index}>{task}</li>
-                    })}
-                </ul>
+const Experience = (props) => {
+    return (
+        <div className='experience heading'>
+            <h3>Professional Experience</h3>
+            <h5>{props.jobName}</h5>
+            <div className='experience-header'>
+                <h5>{props.company}</h5>
+                |
+                <h5>{props.location}</h5>
+                |
+                <h5>{props.from} - {props.to}</h5>
             </div>
-        )
-    }
+            <p>Summarize your main responsibilities using past tense and provide information
+            about the organization
+            </p>
+            <ul className='responsibility-list'>
+                {props.responsibilities.map((task, index) => {
+                    return <li key={index}>{task}</li>
+                })}
+            </ul>
+        </div>
+    )
 }
 
 export default Experience

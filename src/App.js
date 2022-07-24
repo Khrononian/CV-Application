@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useRef } from 'react';
 import './App.css';
 import HeaderCreate from './FormCreate/HeaderCreate' 
 import ContactCreate from './FormCreate/ContactCreate'
@@ -10,53 +10,69 @@ import Education from './FormPreview/Education'
 import Profile from './FormPreview/Profile' 
 import Experience from './FormPreview/Experience'
 
-class App extends Component {
-  constructor () {
-    super()
+const App = () => {
+  const [input, setInput] = useState({
+    header: {
+      name: 'Khrononian',
+      profession: 'Frontend Developer'
+    },
+    contacts: {
+      phoneNum: '111-111-1111',
+      email: 'Alv.Barnes@gmail.com',
+      location: 'US',
+      links: 'github.com/Khrononian'
+    },
+    imageUrl: 'https://imgs.search.brave.com/ANm-hlwm6O9bbxu1dym0adqET2SEA6oc2Di4RQyUQ6E/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2U0/LmV4cGxpY2l0LmJp/bmcubmV0L3RoP2lk/PU9JUC5mVnpkS0Uy/RVBaekI1UGlJMXB2/YUZRSGFIYSZwaWQ9/QXBp',
+    education: {
+      degree: 'High School Diploma',
+      schoolName: 'High School',
+      duration: {
+        from: '',
+        to: ''
+      }
+    },
+    skills: {
+      skill: '',
+    },
+    skillsArray: ['Patience', 'Optimism', 'Resilience', 'Detailed'],
+    profile: 'Write a powerful performance summary here. Highlight your most valuabel skills, qualifications, achievments, credentials and other distinguishing information as it relates to and supports your current objective.',
+    
+    experience: {
+      jobName: 'Customer Service Frontend',
+      company: 'Whole Foods Market',
+      location: 'North Miami, FL',
+      duration: {
+        from: '2021',
+        to: '2022'
+      },
+    },
+    responsibility: '',
+    jobResponsibilities: ['Customer service as cashier', 'Answering a guests question', 'Cash handling experience'],
+    experienceValues: [
+      {
+        jobName: '',
+        company: '',
+        location: '',
+        from: '',
+        to: '',
+        responsibility: '',
+        jobResponsibilities: [],
+        id: 0
+      }
+    ],
+    data: 0
+  })
+  let skillRef = useRef()
+  let responsibilityRef = useRef()
+  let newResponsibilityRef = useRef()
 
-    this.skillRef = React.createRef();
-    this.responsibilityRef = React.createRef()
-    this.newResponsibilityRef = React.createRef()
+  
 
-    this.state = {
-      header: {
-        name: 'Khrononian',
-        profession: 'Frontend Developer'
-      },
-      contacts: {
-        phoneNum: '111-111-1111',
-        email: 'Alv.Barnes@gmail.com',
-        location: 'US',
-        links: 'github.com/Khrononian'
-      },
-      imageUrl: 'https://imgs.search.brave.com/ANm-hlwm6O9bbxu1dym0adqET2SEA6oc2Di4RQyUQ6E/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2U0/LmV4cGxpY2l0LmJp/bmcubmV0L3RoP2lk/PU9JUC5mVnpkS0Uy/RVBaekI1UGlJMXB2/YUZRSGFIYSZwaWQ9/QXBp',
-      education: {
-        degree: 'High School Diploma',
-        schoolName: 'High School',
-        duration: {
-          from: '',
-          to: ''
-        }
-      },
-      skills: {
-        skill: '',
-      },
-      skillsArray: ['Patience', 'Optimism', 'Resilience', 'Detailed'],
-      profile: 'Write a powerful performance summary here. Highlight your most valuabel skills, qualifications, achievments, credentials and other distinguishing information as it relates to and supports your current objective.',
-      
-      experience: {
-        jobName: 'Customer Service Frontend',
-        company: 'Whole Foods Market',
-        location: 'North Miami, FL',
-        duration: {
-          from: '2021',
-          to: '2022'
-        },
-      },
-      responsibility: '',
-      jobResponsibilities: ['Customer service as cashier', 'Answering a guests question', 'Cash handling experience'],
-      experienceValues: [
-        {
+  const addExperience = () => {
+    setInput(prevInput => ({
+      ...prevInput,
+      experienceValues:
+        input.experienceValues.concat({
           jobName: '',
           company: '',
           location: '',
@@ -64,290 +80,279 @@ class App extends Component {
           to: '',
           responsibility: '',
           jobResponsibilities: [],
-          id: 0
-        }
-      ],
-      data: 0
-    }
-  }
-
-  addExperience = () => {
-    this.setState(prevState => ({
-      experienceValues: 
-        this.state.experienceValues.concat({
-          jobName: '',
-          company: '',
-          location: '',
-          from: '',
-          to: '',
-          responsibility: '',
-          jobResponsibilities: [],
-          id: prevState.id = prevState.data + 1
+          id: prevInput.id = prevInput.data + 1
         }),
-      data: prevState.data + 1
+        data: prevInput.data + 1
     }))
   }
 
-  handleInputChanges = (event) => {
-    this.setState(prevState => ({
-      experienceValues: prevState.experienceValues.map(
-        (item, index) => item.id === Number( event.nativeEvent.path[1].id) ? {
+  const handleInputChanges = (event) => {
+    setInput(prevInput => ({
+      ...prevInput,
+      experienceValues: prevInput.experienceValues.map(
+        (item, index) => item.id === Number(event.nativeEvent.path[1].id) ? {
           ...item,
           [event.target.name]: event.target.value
-        } : item,
-        
+        } : item
       )
     }))
   }
 
-  removeFormUI = event => {
-    const mappedItems = this.state.experienceValues
+  const removeFormUI = event => {
+    const mappedItems = input.experienceValues
     .filter(current => current.id !== Number(event.nativeEvent.path[1].id))
     .map((item, index) => item.id !== index ? {
       ...item,
       id: index,
-    } : item
-    )
+    } : item)
 
-    this.setState(prevState => ({
+    setInput(prevInput => ({
+      ...prevInput,
       experienceValues: mappedItems,
-      data: prevState.data - 1
+      data: prevInput.data - 1
     }))
   }
 
-  setHeaderName = (event) => {
-    this.setState({
+  const setHeaderName = event => {
+    setInput({
+      ...input,
       header: {
-        ...this.state.header,
-        [event.target.name]: event.target.value,
-        
-      },
+        ...input.header,
+        [event.target.name]: event.target.value
+      }
     })
   }
-
-  setContacts = event => {
-    this.setState({
+  
+  const setContacts = event => {
+    setInput({
+      ...input,
       contacts: {
-        ...this.state.contacts,
+        ...input.contacts,
         [event.target.name]: event.target.value,
       },
-      [event.target.name]: event.target.value
+      
     })
   }
 
-  setImageUrl = event => {
+  const setImageUrl = event => {
     if (event.target.files && event.target.files[0]) {
-      this.setState({
+      setInput({
+        ...input,
         imageUrl: URL.createObjectURL(event.target.files[0])
-        
       })
     }
   }
 
-  setEducation = event => {
-    this.setState({
+  const setEducation = event => {
+    setInput({
+      ...input,
       education: {
-        ...this.state.education,
+        ...input.education,
         [event.target.name]: event.target.value,
         duration: {
-          ...this.state.education.duration,
-          [event.target.name]: event.target.value,
+          ...input.education.duration,
+          [event.target.name]: event.target.value
         }
-      },
+      }
     })
   }
 
-  setInputs = event => {
-    this.setState({
+  const setSkillInputs = event => {
+    setInput({
+      ...input,
       skills: {
         skill: event.target.value
       }
     })
   }
 
-  setSkills = (event) => {
+  const setSkills = event => {
     event.preventDefault()
 
-    if (this.skillRef.current.value === '') return
-    this.setState({
+    if (skillRef.current.value === '') return
+
+    setInput({
+      ...input,
       skills: {
-        skill: '',
+        skill: ''
       },
-      skillsArray: this.state.skillsArray.concat(this.state.skills.skill),
+      skillsArray: input.skillsArray.concat(input.skills.skill),
     })
-    this.skillRef.current.value = ''
+    
+    skillRef.current.value = ''
   }
 
-  setExperience = event => {
-    this.setState({
+  const setExperience = event => {
+    setInput({
+      ...input,
       experience: {
-        ...this.state.experience,
+        ...input.experienceValues,
         [event.target.name]: event.target.value,
         duration: {
-          ...this.state.experience.duration,
-          [event.target.name]: event.target.value,
+          ...input.experience.duration,
+          [event.target.name]: event.target.value
         }
-      },
+      }
     })
   }
 
-  setResponsibility = event => {
-    this.setState({
+  const setResponsibility = event => {
+    setInput({
+      ...input,
       responsibility: event.target.value
     })
   }
 
-  setNewResponsibility = event => {
-    this.setState( prevState => ({
-      experienceValues: prevState.experienceValues
+  const setResponsibilities = event => {
+    event.preventDefault();
+
+    if (responsibilityRef.current.value === '') return
+
+    setInput({
+      ...input,
+      responsibility: '',
+      jobResponsibilities: input.jobResponsibilities.concat(input.responsibility)
+    })
+    responsibilityRef.current.value = ''
+  }
+
+  const setNewResponsibility = event => {
+    setInput(prevInput => ({
+      ...prevInput,
+      experienceValues: prevInput.experienceValues
       .map((item, index) => item.id === Number(event.nativeEvent.path[2].id) ? Object.assign({}, item, { responsibility: event.target.value }) : item)
     }))
   }
 
-  setResponsibilities = event => {
+  const setNewResponsibilities = event => {
     event.preventDefault()
 
-    if (this.responsibilityRef.current.value === '') return
+    if (newResponsibilityRef.current.value === '') return
 
-    this.setState({
-      responsibility: '',
-      jobResponsibilities: this.state.jobResponsibilities.concat(this.state.responsibility)
-    })
-
-    this.responsibilityRef.current.value = ''
-  }
-
-  setNewResponsibilities = event => {
-    event.preventDefault()
-
-    if (this.newResponsibilityRef.current.value === '') return
-
-    this.setState({
-      experienceValues: this.state.experienceValues
-      .map(current => current.id === Number(event.nativeEvent.path[2].id) ?
-      Object.assign({}, current, { 
+    setInput({
+      ...input,
+      experienceValues: input.experienceValues
+      .map(current => current.id === Number(event.nativeEvent.path[2].id) ? 
+      Object.assign({}, current, {
         responsibility: '',
-        jobResponsibilities: current.jobResponsibilities.concat(current.responsibility) 
-      }) : current)
+        jobResponsibilities: current.jobResponsibilities.concat(current.responsibility)
+      }) : current) 
     })
 
-    this.newResponsibilityRef.current.value = ''
+    newResponsibilityRef.current.value = ''
   }
 
-  createOutputUI = () => {
-    const getInfo = this.state.experienceValues
-    return this.state.experienceValues.map((current, index) => 
-        <div className='experience heading' key={index} id={index}>
-            <h5>{getInfo[index].jobName}</h5>
-            <div className='experience-header'>
-                <h5>{getInfo[index].company}</h5>
-                |
-                <h5>{getInfo[index].location}</h5>
-                |
-                <h5>{getInfo[index].from} - {getInfo[index].to}</h5>
-            </div>
-            <p>Summarize your main responsibilities using past tense and provide information
-            about the organization
-            </p>
-            <ul className='responsibility-list'>
-                {getInfo[index].jobResponsibilities.map((task, index) => {
-                    return <li key={index}>{task}</li>
-                })}
-            </ul>
+  const createOutputUI = () => {
+    const getInfo = input.experienceValues;
+
+    return input.experienceValues.map((current, index) =>
+      <div className='experience heading' key={index} id={index}>
+        <h5>{getInfo[index].jobName}</h5>
+        <div className='experience-header'>
+            <h5>{getInfo[index].company}</h5>
+            |
+            <h5>{getInfo[index].location}</h5>
+            |
+            <h5>{getInfo[index].from} - {getInfo[index].to}</h5>
         </div>
-        
+        <p>Summarize your main responsibilities using past tense and provide information
+        about the organization
+        </p>
+        <ul className='responsibility-list'>
+            {getInfo[index].jobResponsibilities.map((task, index) => {
+                return <li key={index}>{task}</li>
+            })}
+        </ul>
+      </div>
     )
   }
 
-  render () {
-    return (
+  return (
+    <div>
       <div>
         <h1>CV Project</h1>
-        <div className='resumes'>
+          <div className='resumes'>
           <div className='main-profile main-profile-left'>
             <div className='profession'>
               <HeaderCreate 
-                gatherStates={this.state}
-                setHeaderName={this.setHeaderName}
-                setProfession={this.setProfession}
+                gatherStates={input}
+                setHeaderName={setHeaderName}
               />
 
               <ContactCreate
-                setHeaderName={this.setHeaderName}
-                setImageUrl={this.setImageUrl}
-                setContacts={this.setContacts}
-                gatherStates={this.state}
+                setHeaderName={setHeaderName}
+                setImageUrl={setImageUrl}
+                setContacts={setContacts}
+                gatherStates={input}
               />
 
               <EducationCreate
-                gatherStates={this.state}
-                setEducation={this.setEducation}
-                setSkills={this.setSkills}
-                setInputs={this.setInputs}
-                skillRef={this.skillRef}
+                gatherStates={input}
+                setEducation={setEducation}
+                setSkills={setSkills}
+                setSkillInputs={setSkillInputs}
+                skillRef={skillRef}
               />
 
               <ExperienceCreate
-                gatherStates={this.state}
-                setExperience={this.setExperience}
-                setResponsibility={this.setResponsibility}
-                setResponsibilities={this.setResponsibilities}
-                setNewResponsibility={this.setNewResponsibility}
-                setNewResponsibilities={this.setNewResponsibilities}
-                responsibilityRef={this.responsibilityRef}
-                newResponsibilityRef={this.newResponsibilityRef}
-                experienceValues={this.state.experienceValues}
-                addExperience={this.addExperience}
-                removeFormUI={this.removeFormUI}
-                handleInputChanges={this.handleInputChanges}
+                gatherStates={input}
+                setExperience={setExperience}
+                setResponsibility={setResponsibility}
+                setResponsibilities={setResponsibilities}
+                setNewResponsibility={setNewResponsibility}
+                setNewResponsibilities={setNewResponsibilities}
+                responsibilityRef={responsibilityRef}
+                newResponsibilityRef={newResponsibilityRef}
+                experienceValues={input.experienceValues}
+                addExperience={addExperience}
+                removeFormUI={removeFormUI}
+                handleInputChanges={handleInputChanges}
               />
             </div>
-
           </div>
           <div className='main-profile main-profile-right'>
-            
             <div className='left-col'>
               <Contacts
-                imageUrl={this.state.imageUrl}
-                phoneNum={this.state.contacts.phoneNum}
-                email={this.state.contacts.email}
-                location={this.state.contacts.location}
-                links={this.state.contacts.links}
+                imageUrl={input.imageUrl}
+                phoneNum={input.contacts.phoneNum}
+                email={input.contacts.email}
+                location={input.contacts.location}
+                links={input.contacts.links}
               />
               <Education
-                degree={this.state.education.degree}
-                schoolName={this.state.education.schoolName}
-                from={this.state.education.duration.from}
-                to={this.state.education.duration.to}
-                skillsArray={this.state.skillsArray}
+                degree={input.education.degree}
+                schoolName={input.education.schoolName}
+                from={input.education.duration.from}
+                to={input.education.duration.to}
+                skillsArray={input.skillsArray}
               />
             </div>
             <div className='right-col'>
               <Header 
-                name={this.state.header.name} 
-                profession={this.state.header.profession}
+                name={input.header.name} 
+                profession={input.header.profession}
               />
 
               <Profile
-                profile={this.state.profile}
+                profile={input.profile}
               />
 
               <Experience
-                jobName={this.state.experience.jobName}
-                company={this.state.experience.company}
-                location={this.state.experience.location}
-                from={this.state.experience.duration.from}
-                to={this.state.experience.duration.to}
-                responsibilities={this.state.jobResponsibilities}
+                jobName={input.experience.jobName}
+                company={input.experience.company}
+                location={input.experience.location}
+                from={input.experience.duration.from}
+                to={input.experience.duration.to}
+                responsibilities={input.jobResponsibilities}
               />
 
-              {this.createOutputUI()}
+              {createOutputUI()}
             </div>
           </div>
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default App;
